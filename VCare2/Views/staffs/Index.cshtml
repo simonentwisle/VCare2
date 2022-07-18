@@ -1,0 +1,65 @@
+﻿@model IEnumerable<VCare2.DatabaseLayer.Models.staff>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Forename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareHome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Forename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareHome.CareHomeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle.JobTitleId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StaffId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StaffId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StaffId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
