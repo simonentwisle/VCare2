@@ -1,11 +1,28 @@
 ﻿@model VCare2.DatabaseLayer.Models.staff
+@inject  VCare2.ServiceLayer.StateService StateService
+@inject  VCare2.ServiceLayer.StaffInjectionViewService StaffInjectionViewService
+@*@inject  VCare2.ServiceLayer.StatisticsService StatsService*@
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
+@*
+<ul>
+            <li>Total Items: @StatsService.GetCount()</li>
+            <li>Completed: @StatsService.GetCompletedCount()</li>
+            <li>Avg. Priority: @StatsService.GetAveragePriority()</li>
+</ul>*@
 
+<div>
+   @foreach (var state in StateService.List())
+    {
+       @state.Name
+       @state.Abbreviation
+    }
+
+</div>
 <div>
     <h4>staff</h4>
     <hr />
@@ -38,21 +55,24 @@
             @Html.DisplayNameFor(model => model.CareHome)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CareHome.CareHomeId)
+            @Html.DisplayFor(model => model.CareHome.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.JobTitle)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.JobTitle.JobTitleId)
+            @Html.DisplayFor(model => model.JobTitle.JobTitle)
         </dd>
         <dd class="col-sm-10">
             <table class="table">
                 <tr>
-                    <th>Qualification Type</th>
+                    <th>QualificationType</th>
                     <th>Grade</th>
+                    <th>AttainmentDate</th>
                 </tr>
-                @foreach (var item in Model.StaffQualifications)
+
+               @* <div>Total Items: @StaffInjectionViewService.List()</div>*@
+                @foreach (var item in StaffInjectionViewService.List())
                 {
                     <tr>
                         <td>
@@ -60,6 +80,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Grade)
+                        </td>
+                         <td>
+                            @Html.DisplayFor(modelItem => item.AttainmentDate)
                         </td>
                     </tr>
                 }

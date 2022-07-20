@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VCare2.DatabaseLayer;
 using VCare2.DatabaseLayer.Models;
+using VCare2.Models.ViewModels;
 
 namespace VCare2.Controllers
 {
@@ -34,26 +35,50 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
+            var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
 
-            var staff = await _context.staff
-                .Join(_context.StaffQualifications, s => s.StaffId, sq => sq.StaffId, (s, sq) => new { s, sq })
-               .Join(_context.Qualifications, s => s.sq.QualificationTypeId, q => q.QualificationsId, (s, q) => new { s, q })
-               .Select(m => new {
-                   QualificationType = m.q.QualificationType,
-                   CatId = m.s.s.Forename
-                   // other assignments
-               }).ToList();
+            ViewData["StaffID"] = id;
 
-            //.FirstOrDefaultAsync(m => m.StaffId == id);
+            //var staffQualificationsViewData = new staffQualificationsViewData();
+
+            //if (staffQualificationsViewData == null) return NotFound();
+
+            //staffQualificationsViewData.staffMember = staff;
+
+            //staff.CareHomeName = _context.Locations.Where(t => t.CareHomeId == staff.CareHomeId).Select(t => t.Name).Single();
+
+            //staff.JobName = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).Select(t => t.JobTitle).Single();
+
+            ////staff.Qualifications = _context.StaffQualifications.Where(q => q.StaffId == staff.StaffId).Select(s => s);
+
+            //var staffQualList = _context.StaffQualifications
+            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
+            //    .Where(sqq => sqq.sq.StaffId == id)
+            //    .Select(c => c).ToList();
+
+            ////staffQualificationsViewData.StaffQualifications = staffQualList.ToList<StaffQualification>();
+
+            //ViewData["StaffQualifications"] = _context.StaffQualifications
+            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
+            //    .Where(sqq => sqq.sq.StaffId == id)
+            //    .Select(c => c);
+
+            //if (staffQualificationsViewData == null) return NotFound();
 
 
-            if (staff == null)
-            {
-                return NotFound();
-            }
+
+            //var test = await _context.staff
+            //    .Join(_context.StaffQualifications, s => s.StaffId, sq => sq.StaffId, (s, sq) => new { s, sq })
+            //   .Join(_context.Qualifications, s => s.sq.QualificationTypeId, q => q.QualificationsId, (s, q) => new { s, q })
+            //   .Select(m => new {
+            //       QualificationType = m.q.QualificationType,
+            //       CatId = m.s.s.Forename
+            //       // other assignments
+            //   });
 
             return View(staff);
         }
+
 
         // GET: staffs/Create
         public IActionResult Create()
