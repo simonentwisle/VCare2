@@ -41,7 +41,13 @@ namespace VCare2.ServiceLayer
 
             foreach (var item in qualifications)
             {
-                if (item != null)
+                //i => {
+                //    var x = i as TypeThatHasNameProperty;
+                //    return (x != null) ? x.name : i.inner.name;
+                //}
+                var staffid = item.StaffQualifications.Select(x => x.StaffId).SingleOrDefault();
+
+                if (staffid == id)
                 {
                     staffQualificationsList.Add(item.StaffQualifications.SingleOrDefault());
                 }
