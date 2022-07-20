@@ -7,6 +7,7 @@ namespace VCare2.ServiceLayer
     public interface IStaffInjectionViewServicece
     {
         IEnumerable<StaffQualification> List();
+        int id { get; set; }    
     }
 
     public class StaffInjectionViewService : IStaffInjectionViewServicece
@@ -16,16 +17,20 @@ namespace VCare2.ServiceLayer
         public StaffInjectionViewService(CareHomeContext careHomeContext)
         {
             _context = careHomeContext;
-        } 
-        public IEnumerable<StaffQualification> List()
+        }
+
+        public int id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public IEnumerable<StaffQualification> List(int id)
         {
             List<StaffQualification> list = new List<StaffQualification>();
 
-            //get staff qualifications list and qualifications list separetely the merge the two
-            //so the return type is List<StaffQualification> 
+            //READ UP IList
 
-            IList resultList = new List<StaffQualification>();
-            IEnumerable<StaffQualification> staffQualifications = (IList<StaffQualification>)_context.StaffQualifications.Where(sq => sq.StaffId == 3).ToList();
+            IList<StaffQualification> staffQualificationsList = new List<StaffQualification>();
+            IList<Qualification> qualificationsList = new List<Qualification>();
+            IEnumerable<StaffQualification> staffQualifications = _context.StaffQualifications.Where(sq => sq.StaffId == id).ToList();
+            IEnumerable<Qualification> qualifications = _context.Qualifications.ToList();
 
             //IEnumerable<StaffQualification> staffQualifications = (IList<StaffQualification>)_context.StaffQualifications
             //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
@@ -34,41 +39,30 @@ namespace VCare2.ServiceLayer
             //                        Grade = m.sq.Grade,
             //                        }).ToList();
 
-            //.Select(m => new
-            // {
-            //     ProdId = m.ppc.p.Id, // or m.ppc.pc.ProdId
-            //     CatId = m.c.CatId
-            //      other assignments
-            // });
-            foreach (var item in staffQualifications)
+            foreach (var item in qualifications)
             {
-                resultList.Add(new StaffQualification { Grade = item.Grade, QualificationType = item.QualificationType ,AttainmentDate = item.AttainmentDate});
+                if (item != null)
+                {
+                    staffQualificationsList.Add(item.StaffQualifications.SingleOrDefault());
+                }
+                
             }
 
-
-            //var test = _context.StaffQualifications
-            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
-            //    .Where(sqq => sqq.sq.StaffId == 3)
-            //    .Select(c => c)
-            //    .ToList();
-
-            //foreach (var item in test)
+            //staffQualificationsList.ToList().ForEach(item => new StaffQualification { Grade = item.Grade, QualificationType = item.QualificationType, AttainmentDate = item.AttainmentDate });  
+            
+            //foreach (var item in staffQualifications)
             //{
-            //    list.Add(item);
+            //    staffQualificationsList.Add(new StaffQualification { Grade = item.Grade, QualificationType = item.QualificationType ,AttainmentDate = item.AttainmentDate});
             //}
 
-        //    public IEnumerable<State> List()
-        //    {
-        //        return new List<State>
-        //{
-        //    new State { Abbreviation = "AK", Name = "Alaska" },
-        //    new State { Abbreviation = "AL", Name = "Alabama" }
-        //};
-        //    }
-
-            return (IEnumerable<StaffQualification>)resultList;
+     
+            return (IEnumerable<StaffQualification>)staffQualificationsList;
         }
 
+        public IEnumerable<StaffQualification> List()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
     

@@ -72,7 +72,7 @@
                 </tr>
 
                @* <div>Total Items: @StaffInjectionViewService.List()</div>*@
-                @foreach (var item in StaffInjectionViewService.List())
+                @foreach (var item in StaffInjectionViewService.List((int)ViewData["StaffID"] ))
                 {
                     <tr>
                         <td>
