@@ -39,41 +39,8 @@ namespace VCare2.Controllers
 
             ViewData["StaffID"] = id;
 
-            //var staffQualificationsViewData = new staffQualificationsViewData();
-
-            //if (staffQualificationsViewData == null) return NotFound();
-
-            //staffQualificationsViewData.staffMember = staff;
-
             UpdateCareHomeName(staff);
             UpdateJobTitle(staff);
-
-            ////staff.Qualifications = _context.StaffQualifications.Where(q => q.StaffId == staff.StaffId).Select(s => s);
-
-            //var staffQualList = _context.StaffQualifications
-            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
-            //    .Where(sqq => sqq.sq.StaffId == id)
-            //    .Select(c => c).ToList();
-
-            ////staffQualificationsViewData.StaffQualifications = staffQualList.ToList<StaffQualification>();
-
-            //ViewData["StaffQualifications"] = _context.StaffQualifications
-            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
-            //    .Where(sqq => sqq.sq.StaffId == id)
-            //    .Select(c => c);
-
-            //if (staffQualificationsViewData == null) return NotFound();
-
-
-
-            //var test = await _context.staff
-            //    .Join(_context.StaffQualifications, s => s.StaffId, sq => sq.StaffId, (s, sq) => new { s, sq })
-            //   .Join(_context.Qualifications, s => s.sq.QualificationTypeId, q => q.QualificationsId, (s, q) => new { s, q })
-            //   .Select(m => new {
-            //       QualificationType = m.q.QualificationType,
-            //       CatId = m.s.s.Forename
-            //       // other assignments
-            //   });
 
             return View(staff);
         }
@@ -121,8 +88,6 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            UpdateCareHomeName(staff);
-            UpdateJobTitle(staff);
             PopulateJobsDropDownList(staff.JobTitleId);
             PopulateCareHomesDropDownList(staff.CareHomeId);
 
@@ -222,34 +187,6 @@ namespace VCare2.Controllers
             staff.JobName = staff.JobTitle.JobTitle;
             return staff;
         }
-
-        //public IEnumerable<SelectListItem> GetJobs()
-        //{
-        //    List<SelectListItem> jobTitles = _context.Jobs.AsNoTracking()
-        //        .OrderBy(n => n.JobTitle)
-        //            .Select(n =>
-        //            new SelectListItem
-        //            {
-        //                Value = n.JobTitleId.ToString(),
-        //                Text = n.JobTitle
-        //            }).ToList();
-
-        //    return new SelectList(jobTitles, "Value", "Text", 1);
-        //}
-
-        //public IEnumerable<SelectListItem> GetHomes()
-        //{
-        //    List<SelectListItem> careHomes = _context.Locations.AsNoTracking()
-        //        .OrderBy(n => n.CareHomeId)
-        //            .Select(n =>
-        //            new SelectListItem
-        //            {
-        //                Value = n.CareHomeId.ToString(),
-        //                Text = n.Name
-        //            }).ToList();
-
-        //    return new SelectList(careHomes, "Value", "Text", 1);
-        //}
 
         private void PopulateJobsDropDownList(object? selectedItemId = null)
         {
