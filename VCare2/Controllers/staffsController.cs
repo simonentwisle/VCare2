@@ -45,9 +45,8 @@ namespace VCare2.Controllers
 
             //staffQualificationsViewData.staffMember = staff;
 
-            //staff.CareHomeName = _context.Locations.Where(t => t.CareHomeId == staff.CareHomeId).Select(t => t.Name).Single();
-
-            //staff.JobName = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).Select(t => t.JobTitle).Single();
+            UpdateCareHomeName(staff);
+            UpdateJobTitle(staff);
 
             ////staff.Qualifications = _context.StaffQualifications.Where(q => q.StaffId == staff.StaffId).Select(s => s);
 
@@ -103,8 +102,8 @@ namespace VCare2.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            PopulateJobsDropDownList();
-            PopulateCareHomesDropDownList();
+            PopulateJobsDropDownList(staff.JobTitleId);
+            PopulateCareHomesDropDownList(staff.CareHomeId);
             return View(staff);
         }
 
@@ -121,8 +120,11 @@ namespace VCare2.Controllers
             {
                 return NotFound();
             }
-            PopulateJobsDropDownList();
-            PopulateCareHomesDropDownList();
+
+            UpdateCareHomeName(staff);
+            UpdateJobTitle(staff);
+            PopulateJobsDropDownList(staff.JobTitleId);
+            PopulateCareHomesDropDownList(staff.CareHomeId);
 
             return View(staff);
         }
@@ -132,7 +134,7 @@ namespace VCare2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffId,Forename,Surname,Dob,Salary,JobTitleId,CareHomeId")] staff staff)
+        public async Task<IActionResult> Edit(int id, [Bind("StaffId,Forename,Surname,Dob,Salary,JobTitleId,CareHomeId,CareHome,CareHomeName,JobTitle,JobName")] staff staff)
         {
             if (id != staff.StaffId)
             {
@@ -159,9 +161,8 @@ namespace VCare2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateJobsDropDownList();
-            PopulateCareHomesDropDownList();
-
+            PopulateJobsDropDownList(staff.JobTitleId);
+            PopulateCareHomesDropDownList(staff.CareHomeId);
             return View(staff);
         }
 
@@ -209,44 +210,57 @@ namespace VCare2.Controllers
           return (_context.staff?.Any(e => e.StaffId == id)).GetValueOrDefault();
         }
 
-        public IEnumerable<SelectListItem> GetJobs()
+        internal staff UpdateCareHomeName(staff staff)
         {
-            List<SelectListItem> jobTitles = _context.Jobs.AsNoTracking()
-                .OrderBy(n => n.JobTitle)
-                    .Select(n =>
-                    new SelectListItem
-                    {
-                        Value = n.JobTitleId.ToString(),
-                        Text = n.JobTitle
-                    }).ToList();
-
-            return new SelectList(jobTitles, "Value", "Text", 1);
+            staff.CareHomeName =  _context.Locations.Where(t => t.CareHomeId == staff.CareHomeId).Select(t => t.Name).Single();
+            return staff;
         }
 
-        public IEnumerable<SelectListItem> GetHomes()
+        internal staff UpdateJobTitle(staff staff)
         {
-            List<SelectListItem> careHomes = _context.Locations.AsNoTracking()
-                .OrderBy(n => n.CareHomeId)
-                    .Select(n =>
-                    new SelectListItem
-                    {
-                        Value = n.CareHomeId.ToString(),
-                        Text = n.Name
-                    }).ToList();
-
-            return new SelectList(careHomes, "Value", "Text", 1);
+            staff.JobTitle = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).FirstOrDefault();
+            staff.JobName = staff.JobTitle.JobTitle;
+            return staff;
         }
 
-        private void PopulateJobsDropDownList(object selectedDepartment = null)
+        //public IEnumerable<SelectListItem> GetJobs()
+        //{
+        //    List<SelectListItem> jobTitles = _context.Jobs.AsNoTracking()
+        //        .OrderBy(n => n.JobTitle)
+        //            .Select(n =>
+        //            new SelectListItem
+        //            {
+        //                Value = n.JobTitleId.ToString(),
+        //                Text = n.JobTitle
+        //            }).ToList();
+
+        //    return new SelectList(jobTitles, "Value", "Text", 1);
+        //}
+
+        //public IEnumerable<SelectListItem> GetHomes()
+        //{
+        //    List<SelectListItem> careHomes = _context.Locations.AsNoTracking()
+        //        .OrderBy(n => n.CareHomeId)
+        //            .Select(n =>
+        //            new SelectListItem
+        //            {
+        //                Value = n.CareHomeId.ToString(),
+        //                Text = n.Name
+        //            }).ToList();
+
+        //    return new SelectList(careHomes, "Value", "Text", 1);
+        //}
+
+        private void PopulateJobsDropDownList(object? selectedItemId = null)
         {
             var jobs = _context.Jobs;
-            ViewBag.JobTitleId = new SelectList(jobs, "JobTitleId", "JobTitle", selectedDepartment);  
+            ViewBag.JobTitleId = new SelectList(jobs, "JobTitleId", "JobTitle", selectedItemId);  
         }
 
-        private void PopulateCareHomesDropDownList(object selectedDepartment = null)
+        private void PopulateCareHomesDropDownList(object? selectedItemId = null)
         {
             var locations = _context.Locations;
-            ViewBag.CareHomeId = new SelectList(locations, "CareHomeId", "Name", selectedDepartment);
+            ViewBag.CareHomeId = new SelectList(locations, "CareHomeId", "Name", selectedItemId);
         }
     }
 }

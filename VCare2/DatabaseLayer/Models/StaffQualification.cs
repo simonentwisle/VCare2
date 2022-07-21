@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VCare2.DatabaseLayer.Models
 {
@@ -13,7 +14,8 @@ namespace VCare2.DatabaseLayer.Models
         public DateTime DateModified { get; set; }
         public DateTime DateCreated { get; set; }
 
-        public virtual Qualification QualificationType { get; set; } = null!;
-        public virtual staff Staff { get; set; } = null!;
+        public virtual Qualification? QualificationType { get; set; } 
+
+        public virtual staff? Staff { get; set; }
     }
 }
