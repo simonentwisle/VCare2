@@ -16,13 +16,13 @@
             <input type="hidden" asp-for="DateModified" />
             <input type="hidden" asp-for="DateCreated" />
             <div class="form-group">
-                <label asp-for="StaffId" class="control-label"></label>
-                <select asp-for="StaffId" class="form-control" asp-items="ViewBag.StaffId"></select>
-                <span asp-validation-for="StaffId" class="text-danger"></span>
+                <label class="control-label">Name</label>
+                <input asp-for="Staff.Forename" class="form-control" asp-items="ViewBag.Fullname" />
+                <span asp-validation-for="Staff.Forename" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="QualificationTypeId" class="control-label"></label>
-                <select asp-for="QualificationTypeId" class="form-control" asp-items="ViewBag.QualificationTypeId"></select>
+           <div class="form-group">
+                <label class="control-label">Qualification</label>
+                <select asp-for="QualificationTypeId" class="form-control" asp-items="ViewBag.QualificationsId"></select>
                 <span asp-validation-for="QualificationTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">

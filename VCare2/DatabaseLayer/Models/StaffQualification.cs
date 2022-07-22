@@ -11,10 +11,12 @@ namespace VCare2.DatabaseLayer.Models
         public int QualificationTypeId { get; set; }
         public string Grade { get; set; } = null!;
         public DateTime AttainmentDate { get; set; }
+        [NotMapped]
         public DateTime DateModified { get; set; }
+        [NotMapped]
         public DateTime DateCreated { get; set; }
 
-        public virtual Qualification? QualificationType { get; set; } 
+        public virtual Qualification? QualificationType { get; set; }
 
         public virtual staff? Staff { get; set; }
     }

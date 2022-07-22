@@ -51,8 +51,6 @@ namespace VCare2.Controllers
         {
             PopulateQualificationDropDownList();
             PopulateStaffDropDownList();
-            //ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId");
-            //ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "FullName");
             return View();
         }
 
@@ -63,16 +61,19 @@ namespace VCare2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StaffQualificationId,StaffId,QualificationTypeId,Grade,AttainmentDate,DateModified,DateCreated")] StaffQualification staffQualification)
         {
+            staffQualification.DateCreated = DateTime.Now;
+            staffQualification.DateModified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 _context.Add(staffQualification);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
 
-            ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId", staffQualification.QualificationTypeId);
-            ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId", staffQualification.StaffId);
+
+            PopulateQualificationDropDownList();
+            PopulateStaffDropDownList();
             return View(staffQualification);
         }
 
@@ -83,15 +84,21 @@ namespace VCare2.Controllers
             {
                 return NotFound();
             }
-
+         
             var staffQualification = await _context.StaffQualifications.FindAsync(id);
             if (staffQualification == null)
             {
                 return NotFound();
             }
-            
 
-            ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId", staffQualification.QualificationTypeId);
+            PopulateQualificationDropDownList();
+
+            var staff = await _context.StaffQualifications
+                .Include(s => s.Staff)
+                .FirstOrDefaultAsync(m => m.StaffId == id);
+
+
+            //ViewData["Fullname"] = _context.staff.Select(fn => fn.Forename);
             ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId", staffQualification.StaffId);
             return View(staffQualification);
         }
