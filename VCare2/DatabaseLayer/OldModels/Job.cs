@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using VCare2.SharedFunctions;
 
 namespace VCare2.DatabaseLayer.Models
 {
@@ -32,6 +32,6 @@ namespace VCare2.DatabaseLayer.Models
         [Column("DateCreated")]
         public DateTime? DateCreated { get; set; } 
 
-        public virtual ICollection<staff> staff { get; set; }
+        public virtual ICollection<staff?> staff { get; set; }
     }
 }

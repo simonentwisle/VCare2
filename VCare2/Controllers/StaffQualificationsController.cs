@@ -84,7 +84,7 @@ namespace VCare2.Controllers
             {
                 return NotFound();
             }
-         
+
             var staffQualification = await _context.StaffQualifications.FindAsync(id);
             if (staffQualification == null)
             {
@@ -93,12 +93,11 @@ namespace VCare2.Controllers
 
             PopulateQualificationDropDownList();
 
-            var staff = await _context.StaffQualifications
-                .Include(s => s.Staff)
-                .FirstOrDefaultAsync(m => m.StaffId == id);
+            var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == staffQualification.StaffId);
 
+            staffQualification.Staff = staff;
 
-            //ViewData["Fullname"] = _context.staff.Select(fn => fn.Forename);
+            ViewData["Fullname"] = _context.staff.Where(stf => stf.StaffId == id).Select(fn => fn.FullName);
             ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId", staffQualification.StaffId);
             return View(staffQualification);
         }

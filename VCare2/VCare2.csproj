@@ -7,7 +7,50 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DatabaseLayer\OldModels\**" />
+    <Content Remove="DatabaseLayer\OldModels\**" />
+    <EmbeddedResource Remove="DatabaseLayer\OldModels\**" />
+    <None Remove="DatabaseLayer\OldModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DatabaseLayer\Models\" />
+    <Folder Include="SharedFunctions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Jobs\Create.cshtml" />
+    <None Include="Views\Jobs\Delete.cshtml" />
+    <None Include="Views\Jobs\Details.cshtml" />
+    <None Include="Views\Jobs\Edit.cshtml" />
+    <None Include="Views\Jobs\Index.cshtml" />
+    <None Include="Views\Locations\Create.cshtml" />
+    <None Include="Views\Locations\Delete.cshtml" />
+    <None Include="Views\Locations\Details.cshtml" />
+    <None Include="Views\Locations\Edit.cshtml" />
+    <None Include="Views\Locations\Index.cshtml" />
+    <None Include="Views\Qualifications\Create.cshtml" />
+    <None Include="Views\Qualifications\Delete.cshtml" />
+    <None Include="Views\Qualifications\Details.cshtml" />
+    <None Include="Views\Qualifications\Edit.cshtml" />
+    <None Include="Views\Qualifications\Index.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\StaffQualifications\Create.cshtml" />
+    <None Include="Views\StaffQualifications\Delete.cshtml" />
+    <None Include="Views\StaffQualifications\Details.cshtml" />
+    <None Include="Views\StaffQualifications\Edit.cshtml" />
+    <None Include="Views\StaffQualifications\Index.cshtml" />
+    <None Include="Views\staffs\Create.cshtml" />
+    <None Include="Views\staffs\Delete.cshtml" />
+    <None Include="Views\staffs\Details.cshtml" />
+    <None Include="Views\staffs\Edit.cshtml" />
+    <None Include="Views\staffs\Index.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

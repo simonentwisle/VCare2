@@ -14,5 +14,10 @@ namespace VCare2.DatabaseLayer.Models
         public string QualificationType { get; set; } = null!;
 
         public virtual ICollection<StaffQualification> StaffQualifications { get; set; }
+
+        public static implicit operator Qualification(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

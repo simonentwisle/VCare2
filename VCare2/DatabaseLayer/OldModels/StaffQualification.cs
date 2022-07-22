@@ -16,7 +16,8 @@ namespace VCare2.DatabaseLayer.Models
         [NotMapped]
         public DateTime DateCreated { get; set; }
 
-        public virtual Qualification QualificationType { get; set; } = null!;
-        public virtual staff Staff { get; set; } = null!;
+        public virtual Qualification? QualificationType { get; set; }
+
+        public virtual staff? Staff { get; set; }
     }
 }

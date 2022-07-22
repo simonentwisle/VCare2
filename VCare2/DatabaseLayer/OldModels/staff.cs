@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VCare2.DatabaseLayer.Models
 {
-    public partial class staff
+    public partial class 
+        staff
     {
         public staff()
         {
