@@ -13,11 +13,14 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="StaffQualificationId" />
+            <input type="hidden" asp-for="StaffId" />
+            <input type="hidden" asp-for="Staff" />
+            <input type="hidden" asp-for="QualificationType" />
             <input type="hidden" asp-for="DateModified" />
             <input type="hidden" asp-for="DateCreated" />
             <div class="form-group">
                 <label class="control-label">Name</label>
-                <input asp-for="Staff.FullName" class="form-control" asp-items="ViewBag.Fullname" />
+                <input asp-for="Staff.FullName" class="form-control" readonly/>
                 <span asp-validation-for="Staff.Forename" class="text-danger"></span>
             </div>
            <div class="form-group">

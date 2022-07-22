@@ -85,7 +85,11 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staffQualification = await _context.StaffQualifications.FindAsync(id);
+            var staffQualification = await _context.StaffQualifications
+               .Include(s => s.QualificationType)
+               .Include(s => s.Staff)
+               .FirstOrDefaultAsync(m => m.StaffQualificationId == id);
+
             if (staffQualification == null)
             {
                 return NotFound();
@@ -93,13 +97,20 @@ namespace VCare2.Controllers
 
             PopulateQualificationDropDownList();
 
-            var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == staffQualification.StaffId);
-
-            staffQualification.Staff = staff;
-
-            ViewData["Fullname"] = _context.staff.Where(stf => stf.StaffId == id).Select(fn => fn.FullName);
             ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId", staffQualification.StaffId);
             return View(staffQualification);
+        }
+
+        private async Task<staff> SetStaffMember(StaffQualification staffQualification)
+        {
+            if (staffQualification == null)
+            {
+                return new staff();
+            }
+
+            var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == staffQualification.StaffId);
+            ViewData["staffmember"] = staff;
+            return staff;
         }
 
         // POST: StaffQualifications/Edit/5
@@ -107,12 +118,16 @@ namespace VCare2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffQualificationId,StaffId,QualificationTypeId,Grade,AttainmentDate,DateModified,DateCreated")] StaffQualification staffQualification)
+        public async Task<IActionResult> Edit(int id, [Bind("StaffQualificationId,StaffId,QualificationTypeId,Grade,AttainmentDate,DateModified,DateCreated,Staff,QualificationType")] StaffQualification staffQualification)
         {
             if (id != staffQualification.StaffQualificationId)
             {
                 return NotFound();
             }
+
+            ModelState.Remove("Staff");
+            ModelState.Clear();
+
 
             if (ModelState.IsValid)
             {
