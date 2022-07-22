@@ -13,9 +13,5 @@ namespace VCare2.SharedFunctions
             _context = context;
         }
 
-        internal string? GetJobTitle(int jobTitleId)
-        {
-            return "test job title";
-        }
     }
 }

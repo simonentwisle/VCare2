@@ -49,8 +49,10 @@ namespace VCare2.Controllers
         // GET: StaffQualifications/Create
         public IActionResult Create()
         {
-            ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId");
-            ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId");
+            PopulateQualificationDropDownList();
+            PopulateStaffDropDownList();
+            //ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId");
+            //ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "FullName");
             return View();
         }
 
@@ -67,6 +69,8 @@ namespace VCare2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
+
             ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId", staffQualification.QualificationTypeId);
             ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId", staffQualification.StaffId);
             return View(staffQualification);
@@ -85,6 +89,8 @@ namespace VCare2.Controllers
             {
                 return NotFound();
             }
+            
+
             ViewData["QualificationTypeId"] = new SelectList(_context.Qualifications, "QualificationsId", "QualificationsId", staffQualification.QualificationTypeId);
             ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "StaffId", staffQualification.StaffId);
             return View(staffQualification);
@@ -169,6 +175,26 @@ namespace VCare2.Controllers
         private bool StaffQualificationExists(int id)
         {
           return (_context.StaffQualifications?.Any(e => e.StaffQualificationId == id)).GetValueOrDefault();
+        }
+
+        private void PopulateQualificationDropDownList(object? selectedItemId = null)
+        {
+            var qualifications = _context.Qualifications;
+            ViewData["QualificationsId"] = new SelectList(qualifications, "QualificationsId", "QualificationType", selectedItemId);
+        }
+
+        private void PopulateStaffDropDownList(object? selectedItemId = null)
+        {
+            var staff = _context.staff;
+            if (selectedItemId == null)
+            {
+                ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "FullName");
+            }
+            else
+            {
+                ViewData["StaffId"] = new SelectList(_context.staff, "StaffId", "Fullname", selectedItemId);
+            }
+            
         }
     }
 }
