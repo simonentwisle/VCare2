@@ -38,8 +38,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
-
+            var staff = _service.Details(id);
             ViewData["StaffID"] = id;
 
             UpdateCareHomeName(staff);

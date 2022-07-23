@@ -24,20 +24,19 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: staffs/Details/5
-        public staff Details(int? id)
+        public  staff Details(int? id)
         {
-            //if (id == null || _context.staff == null)
-            //{
-            //    return null;
-            //}
+            if (id == null || _context.staff == null)
+            {
+                return null;
+            }
 
-            //var staff = _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
+            staff staff = _context.staff.FirstOrDefault(m => m.StaffId == id);
 
-            //UpdateCareHomeName(staff);
-            //UpdateJobTitle(staff);
+            UpdateCareHomeName(staff);
+            UpdateJobTitle(staff);
 
-            //return staff;
-            return null;
+            return staff;
         }
 
         public virtual async Task<staff> Create(staff newStaffMember)

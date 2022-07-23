@@ -24,19 +24,17 @@ namespace VCare2.ServiceLayer
             }
         }
 
-
-
-        //public async Task<staff> Details(int? id)
-        //{
-        //    try
-        //    {
-        //        return await _stafRepository.Details(id);
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        return null;
-        //    }
-        //}
+        public staff Details(int? id)
+        {
+            try
+            {
+                return _stafRepository.Details(id);
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
 
         public async Task<staff> Create(staff staffMember)
         {
