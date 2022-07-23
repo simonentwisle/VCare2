@@ -16,72 +16,28 @@ namespace VCare2.RepositoryLayer
             _context = context;
         }
 
-        // GET: StaffMembers/Details/5
-        public async Task<staff> Details(int? id)
+        // GET: staffs
+        public async Task<List<staff>> Index()
         {
-            if (id == null || _context.staff == null)
-            {
-                return null;
-            }
+            var staffList = _context.staff.Include(s => s.CareHome).Include(s => s.JobTitle);
+            return await staffList.ToListAsync();
+        }
 
-            var staffMember = await _context.staff
-                .Include(s => s.CareHomeName)
-                .Include(s => s.JobTitle)
-                .FirstOrDefaultAsync(m => m.StaffId == id);
+        // GET: staffs/Details/5
+        public staff Details(int? id)
+        {
+            //if (id == null || _context.staff == null)
+            //{
+            //    return null;
+            //}
 
-            if (staffMember == null)
-            {
-                return null;
-            }
+            //var staff = _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
 
-            return staffMember;
+            //UpdateCareHomeName(staff);
+            //UpdateJobTitle(staff);
 
-            if (id == null || _context.staff == null)
-            {
-                return null;
-            }
-
-
-            //var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
-
-            //var staffQualificationsViewData = new staffQualificationsViewData();
-
-            //if (staffQualificationsViewData == null) return null;
-
-            //staffQualificationsViewData.staffMember = staff;
-
-            //staff.CareHomeName = _context.Locations.Where(t => t.CareHomeId == staff.CareHomeId).Select(t => t.Name).Single();
-
-            //staff.JobName = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).Select(t => t.JobTitle).Single();
-
-            ////staff.Qualifications = _context.StaffQualifications.Where(q => q.StaffId == staff.StaffId).Select(s => s);
-
-            //var staffQualList = _context.StaffQualifications
-            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
-            //    .Where(sqq => sqq.sq.StaffId == id)
-            //    .Select(c => c).ToList();
-
-            //staffQualificationsViewData.StaffQualifications = staffQualList.ToList<StaffQualification>();
-
-            //ViewData["StaffQualifications"] = _context.StaffQualifications
-            //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
-            //    .Where(sqq => sqq.sq.StaffId == id)
-            //    .Select(c => c);
-
-            //if (staffQualificationsViewData == null) return null;
-
-
-
-            ////var test = await _context.staff
-            ////    .Join(_context.StaffQualifications, s => s.StaffId, sq => sq.StaffId, (s, sq) => new { s, sq })
-            ////   .Join(_context.Qualifications, s => s.sq.QualificationTypeId, q => q.QualificationsId, (s, q) => new { s, q })
-            ////   .Select(m => new {
-            ////       QualificationType = m.q.QualificationType,
-            ////       CatId = m.s.s.Forename
-            ////       // other assignments
-            ////   });
-
-            //return staffQualificationsViewData;
+            //return staff;
+            return null;
         }
 
         public virtual async Task<staff> Create(staff newStaffMember)
@@ -190,5 +146,29 @@ namespace VCare2.RepositoryLayer
             return string.IsNullOrEmpty(name) || name.Any(x => forbiddenCharacters.Contains(x));
         }
 
+        internal staff UpdateCareHomeName(staff staff)
+        {
+            staff.CareHomeName = _context.Locations.Where(t => t.CareHomeId == staff.CareHomeId).Select(t => t.Name).Single();
+            return staff;
+        }
+
+        internal staff UpdateJobTitle(staff staff)
+        {
+            staff.JobTitle = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).FirstOrDefault();
+            staff.JobName = staff.JobTitle.JobTitle;
+            return staff;
+        }
+
+        private void PopulateJobsDropDownList(object? selectedItemId = null)
+        {
+            var jobs = _context.Jobs;
+            //ViewBag.JobTitleId = new SelectList(jobs, "JobTitleId", "JobTitle", selectedItemId);
+        }
+
+        private void PopulateCareHomesDropDownList(object? selectedItemId = null)
+        {
+            var locations = _context.Locations;
+            //ViewBag.CareHomeId = new SelectList(locations, "CareHomeId", "Name", selectedItemId);
+        }
     }
 }

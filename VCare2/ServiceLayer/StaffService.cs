@@ -7,22 +7,36 @@ namespace VCare2.ServiceLayer
     {
         private readonly StaffRepository _stafRepository;
 
-        public StaffService(StaffRepository staffMemberRepository)
+        public StaffService(StaffRepository staffRepository)
         {
-            _stafRepository = staffMemberRepository;
+            _stafRepository = staffRepository;
         }
 
-        public async Task<staff> Details(int? id)
+        public async Task<List<staff>> Index()
         {
             try
             {
-                return await _stafRepository.Details(id);
+                return await _stafRepository.Index();
             }
             catch (Exception exception)
             {
                 return null;
             }
         }
+
+
+
+        //public async Task<staff> Details(int? id)
+        //{
+        //    try
+        //    {
+        //        return await _stafRepository.Details(id);
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        return null;
+        //    }
+        //}
 
         public async Task<staff> Create(staff staffMember)
         {

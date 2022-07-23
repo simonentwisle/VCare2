@@ -8,23 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using VCare2.DatabaseLayer;
 using VCare2.DatabaseLayer.Models;
 using VCare2.Models.ViewModels;
+using VCare2.ServiceLayer;
 
 namespace VCare2.Controllers
 {
     public class staffsController : Controller
     {
+        private readonly StaffService _service;
         private readonly CareHomeContext _context;
 
-        public staffsController(CareHomeContext context)
+        public staffsController(CareHomeContext context, StaffService staffService )
         {
             _context = context;
+            _service = staffService;
         }
 
         // GET: staffs
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var careHomeContext = _context.staff.Include(s => s.CareHome).Include(s => s.JobTitle);
-            return View(await careHomeContext.ToListAsync());
+            return View(await _service.Index());
         }
 
         // GET: staffs/Details/5
