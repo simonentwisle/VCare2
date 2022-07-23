@@ -64,6 +64,9 @@ namespace VCare2.Controllers
             staffQualification.DateCreated = DateTime.Now;
             staffQualification.DateModified = DateTime.Now;
 
+            ModelState.Remove("Staff");
+            ModelState.Clear();
+
             if (ModelState.IsValid)
             {
                 _context.Add(staffQualification);
@@ -101,18 +104,7 @@ namespace VCare2.Controllers
             return View(staffQualification);
         }
 
-        private async Task<staff> SetStaffMember(StaffQualification staffQualification)
-        {
-            if (staffQualification == null)
-            {
-                return new staff();
-            }
-
-            var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == staffQualification.StaffId);
-            ViewData["staffmember"] = staff;
-            return staff;
-        }
-
+        
         // POST: StaffQualifications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -217,5 +209,18 @@ namespace VCare2.Controllers
             }
             
         }
+
+        //private async Task<staff> SetStaffMember(StaffQualification staffQualification)
+        //{
+        //    if (staffQualification == null)
+        //    {
+        //        return new staff();
+        //    }
+
+        //    var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == staffQualification.StaffId);
+        //    ViewData["staffmember"] = staff;
+        //    return staff;
+        //}
+
     }
 }
