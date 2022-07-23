@@ -58,6 +58,9 @@ namespace VCare2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("JobTitleId,JobTitle,DateModified,DateCreated")] Job job)
         {
+            job.DateCreated = DateTime.Now;
+            job.DateModified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 _context.Add(job);

@@ -22,9 +22,6 @@ namespace VCare2.DatabaseLayer.Models
         [Display(Name = "Job Title")]
         public string? JobTitle { get; set; }
 
-
-
-
         [NotMapped]
         [Column("DateModified")]
         public DateTime? DateModified { get; set; } 

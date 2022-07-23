@@ -15,13 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.JobTitle)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateModified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,12 +22,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.JobTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.JobTitleId">Edit</a> |
