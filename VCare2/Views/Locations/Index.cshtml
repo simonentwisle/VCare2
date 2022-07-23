@@ -15,12 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateModified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,12 +23,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateModified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CareHomeId">Edit</a> |

@@ -58,6 +58,9 @@ namespace VCare2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CareHomeId,Name,DateModified,DateCreated")] Location location)
         {
+            location.DateCreated = DateTime.Now;
+            location.DateModified = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 _context.Add(location);
@@ -90,6 +93,9 @@ namespace VCare2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CareHomeId,Name,DateModified,DateCreated")] Location location)
         {
+            location.DateCreated = DateTime.Now;
+            location.DateModified = DateTime.Now;
+
             if (id != location.CareHomeId)
             {
                 return NotFound();
