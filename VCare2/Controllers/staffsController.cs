@@ -66,8 +66,7 @@ namespace VCare2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(staff);
-                await _context.SaveChangesAsync();
+                await _service.Create(staff);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -84,7 +83,8 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staff = await _context.staff.FindAsync(id);
+            staff staff = _service.Edit(id).Result;
+
             if (staff == null)
             {
                 return NotFound();
@@ -103,17 +103,11 @@ namespace VCare2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StaffId,Forename,Surname,Dob,Salary,JobTitleId,CareHomeId,CareHome,CareHomeName,JobTitle,JobName")] staff staff)
         {
-            if (id != staff.StaffId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(staff);
-                    await _context.SaveChangesAsync();
+                    await _service.Edit(staff);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -141,10 +135,8 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staff = await _context.staff
-                .Include(s => s.CareHome)
-                .Include(s => s.JobTitle)
-                .FirstOrDefaultAsync(m => m.StaffId == id);
+            var staff = _service.Delete(id).Result;
+
             if (staff == null)
             {
                 return NotFound();
@@ -162,13 +154,9 @@ namespace VCare2.Controllers
             {
                 return Problem("Entity set 'CareHomeContext.staff'  is null.");
             }
-            var staff = await _context.staff.FindAsync(id);
-            if (staff != null)
-            {
-                _context.staff.Remove(staff);
-            }
-            
-            await _context.SaveChangesAsync();
+
+            bool success = await _service.DeleteConfirmed(id);
+ 
             return RedirectToAction(nameof(Index));
         }
 

@@ -65,7 +65,7 @@ namespace VCare2.RepositoryLayer
                 return null;
             }
 
-            var staffMember = await _context.staff.FindAsync(id);
+            staff staffMember = await _context.staff.FindAsync(id);
             if (staffMember == null)
             {
                 return null;
@@ -75,14 +75,8 @@ namespace VCare2.RepositoryLayer
         }
 
         // POST: StaffMembers/Edit/5
-        public async Task<staff> Edit(int id, staff staffMember)
+        public async Task<staff> Edit(staff staffMember)
         {
-            if (id != staffMember.StaffId)
-            {
-                return null;
-            }
-
-
             try
             {
                 _context.Update(staffMember);
@@ -106,6 +100,7 @@ namespace VCare2.RepositoryLayer
             {
                 return null; //NOt found
             }
+
 
             var staffMember = await _context.staff
                 .Include(s => s.CareHome)

@@ -63,13 +63,13 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<staff> Edit(int id, staff staffMember)
+        public async Task<staff> Edit(staff staffMember)
         {
-            return await _stafRepository.Edit(id, staffMember);
+            return await _stafRepository.Edit(staffMember);
         }
 
         //get
-        public async Task<staff> Delete(int id)
+        public async Task<staff> Delete(int? id)
         {
             return await _stafRepository.Delete(id);
         }
