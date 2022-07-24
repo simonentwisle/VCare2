@@ -38,7 +38,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var location = _service.Details(id);
+            var location = await _service.Details(id);
             if (location == null)
             {
                 return NotFound();

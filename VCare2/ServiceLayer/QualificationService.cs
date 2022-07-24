@@ -12,7 +12,7 @@ namespace VCare2.ServiceLayer
             _QualificationRepository = QualificationRepository;
         }
 
-        public async Task<List<Qualification>> Index()
+        public async Task<List<Qualification>?> Index()
         {
             try
             {
@@ -24,7 +24,7 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public async Task<Qualification> Details(int? id)
+        public async Task<Qualification?> Details(int? id)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace VCare2.ServiceLayer
         }
 
         //Get
-        public async Task<Qualification> Edit(int? id)
+        public async Task<Qualification?> Edit(int? id)
         {
             try
             {
@@ -63,15 +63,15 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<Qualification> Update(Qualification Qualification, int id)
+        public async Task<Qualification?> Update(Qualification Qualification, int id)
         {
             return await _QualificationRepository.Edit(id, Qualification);
         }
 
         //get
-        public Qualification Delete(int? id)
+        public async Task<Qualification?> Delete(int? id)
         {
-            return _QualificationRepository.Delete(id);
+            return await _QualificationRepository.Delete(id);
         }
 
         //post

@@ -162,7 +162,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            StaffQualification staffQualification = _service.Delete(id);
+            StaffQualification? staffQualification = await _service.Delete(id);
 
             if (staffQualification == null)
             {

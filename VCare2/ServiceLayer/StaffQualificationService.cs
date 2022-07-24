@@ -12,7 +12,7 @@ namespace VCare2.ServiceLayer
             _staffQualificationRepository = staffQualificationRepository;
         }
 
-        public async Task<List<StaffQualification>> Index()
+        public async Task<List<StaffQualification>?> Index()
         {
             try
             {
@@ -24,7 +24,7 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public StaffQualification Details(int? id)
+        public StaffQualification? Details(int? id)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public async Task<StaffQualification> Create(StaffQualification staffQualification)
+        public async Task<StaffQualification?> Create(StaffQualification staffQualification)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace VCare2.ServiceLayer
         }
 
         //Get
-        public async Task<StaffQualification> Edit(int? id)
+        public async Task<StaffQualification?> Edit(int? id)
         {
             try
             {
@@ -69,9 +69,9 @@ namespace VCare2.ServiceLayer
         }
 
         //get
-        public StaffQualification Delete(int? id)
+        public async Task<StaffQualification?>  Delete(int? id)
         {
-            return _staffQualificationRepository.Delete(id);
+            return await _staffQualificationRepository.Delete(id);
         }
 
         //post

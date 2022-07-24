@@ -36,7 +36,7 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public async Task<Job> Create(Job JobMember)
+        public async Task<Job?> Create(Job JobMember)
         {
             try
             {
@@ -69,9 +69,9 @@ namespace VCare2.ServiceLayer
         }
 
         //get
-        public async Task<Job> Delete(int? id)
+        public async Task<Job?> Delete(int? id)
         {
-            return  _jobTitleRepository.Delete(id);
+            return await _jobTitleRepository.Delete(id);
         }
 
         //post

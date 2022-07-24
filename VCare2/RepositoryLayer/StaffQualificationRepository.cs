@@ -41,7 +41,7 @@ namespace VCare2.RepositoryLayer
             return staffQualification;
         }
 
-        public virtual async Task<StaffQualification> Create(StaffQualification newStaffQualification)
+        public virtual async Task<StaffQualification?> Create(StaffQualification newStaffQualification)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace VCare2.RepositoryLayer
             return staffQualification;
         }
 
-        public async Task<StaffQualification> Edit(StaffQualification staffQualification )
+        public async Task<StaffQualification?> Edit(StaffQualification staffQualification )
         {
             try
             {
@@ -93,17 +93,17 @@ namespace VCare2.RepositoryLayer
 
         }
 
-        public StaffQualification? Delete(int? id)
+        public async Task<StaffQualification?>  Delete(int? id)
         {
             if (id == null || _context.StaffQualifications == null)
             {
                 return null;
             }
 
-            var staffQualification =  _context.StaffQualifications
+            var staffQualification = await _context.StaffQualifications
                 .Include(s => s.QualificationType)
                 .Include(s => s.Staff)
-                .SingleOrDefault(m => m.StaffQualificationId == id);
+                .SingleOrDefaultAsync(m => m.StaffQualificationId == id);
 
             if (staffQualification == null)
             {

@@ -29,8 +29,8 @@ namespace VCare2.ServiceLayer
 
             IList<StaffQualification> staffQualificationsList = new List<StaffQualification>();
             //IList<Qualification> qualificationsList = new List<Qualification>();
-            IEnumerable<StaffQualification> staffQualifications = _context.StaffQualifications.Where(sq => sq.StaffId == id).ToList();
-            IEnumerable<Qualification> qualifications = _context.Qualifications.ToList();
+            IEnumerable<StaffQualification?> staffQualifications = _context.StaffQualifications.Where(sq => sq.StaffId == id).ToList();
+            IEnumerable<Qualification?> qualifications = _context.Qualifications.ToList();
 
             //IEnumerable<StaffQualification> staffQualifications = (IList<StaffQualification>)_context.StaffQualifications
             //    .Join(_context.Qualifications, sq => sq.QualificationTypeId, q => q.QualificationsId, (sq, q) => new { sq, q })
@@ -41,13 +41,16 @@ namespace VCare2.ServiceLayer
 
             foreach (var item in qualifications)
             {
-                var staffid = item.StaffQualifications.Select(x => x.StaffId).SingleOrDefault();
-
-                if (staffid == id)
+                if (item != null)
                 {
-                    staffQualificationsList.Add(item.StaffQualifications.SingleOrDefault());
+                    var staffid = item.StaffQualifications.Select(x => x.StaffId).SingleOrDefault();
+
+                    if (staffid == id)
+                    {
+                        staffQualificationsList.Add(item.StaffQualifications.SingleOrDefault());
+                    }
+
                 }
-                
             }
 
             return (IEnumerable<StaffQualification>)staffQualificationsList;

@@ -12,7 +12,7 @@ namespace VCare2.ServiceLayer
             _stafRepository = staffRepository;
         }
 
-        public async Task<List<staff>> Index()
+        public async Task<List<staff>?> Index()
         {
             try
             {
@@ -24,11 +24,11 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public staff Details(int? id)
+        public async Task<staff?>  Details(int? id)
         {
             try
             {
-                return _stafRepository.Details(id);
+                return await _stafRepository.Details(id);
             }
             catch (Exception exception)
             {
@@ -36,7 +36,7 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public async Task<staff> Create(staff staffMember)
+        public async Task<staff?> Create(staff staffMember)
         {
             try
             {
@@ -44,12 +44,12 @@ namespace VCare2.ServiceLayer
             }
             catch (Exception exception)
             {
-                return null; //false;   ;
+                return null; 
             }
         }
 
         //Get
-        public async Task<staff> Edit(int? id)
+        public async Task<staff?> Edit(int? id)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace VCare2.ServiceLayer
 
             catch (Exception exception)
             {
-                return null; //false;   ;
+                return null; 
             }
         }
 

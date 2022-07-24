@@ -126,7 +126,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var qualification = _service.Delete(id);
+            var qualification = await _service.Delete(id);
             if (qualification == null)
             {
                 return NotFound();

@@ -86,14 +86,14 @@ namespace VCare2.RepositoryLayer
             return Qualification;
         }
 
-        public Qualification? Delete(int? id)
+        public async Task<Qualification?>  Delete(int? id)
         {
             if (id == null || _context.Qualifications == null)
             {
                 return null;
             }
 
-            var Qualification = _context.Qualifications.SingleOrDefault(j => j.QualificationsId == id);
+            var Qualification = await _context.Qualifications.SingleOrDefaultAsync(j => j.QualificationsId == id);
 
             if (Qualification == null)
             {

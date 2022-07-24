@@ -38,7 +38,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staff = _service.Details(id);
+            var staff = await _service.Details(id);
             ViewData["StaffID"] = id;
 
             UpdateCareHomeName(staff);
@@ -83,7 +83,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            staff staff = _service.Edit(id).Result;
+            staff? staff = await _service.Edit(id);
 
             if (staff == null)
             {
@@ -135,7 +135,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staff = _service.Delete(id).Result;
+            var staff = await _service.Delete(id);
 
             if (staff == null)
             {
@@ -171,7 +171,7 @@ namespace VCare2.Controllers
             return staff;
         }
 
-        internal staff UpdateJobTitle(staff? staff)
+        internal staff? UpdateJobTitle(staff? staff)
         {
             staff.JobTitle = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).FirstOrDefault();
             staff.JobName = staff.JobTitle.JobTitle;

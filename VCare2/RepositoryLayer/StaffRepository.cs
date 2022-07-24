@@ -24,14 +24,14 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: staffs/Details/5
-        public  staff? Details(int? id)
+        public async Task<staff?> Details(int? id)
         {
             if (id == null || _context.staff == null)
             {
                 return null;
             }
 
-            staff? staff = _context.staff.FirstOrDefault(m => m.StaffId == id);
+            staff? staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
 
             UpdateCareHomeName(staff);
             UpdateJobTitle(staff);
@@ -39,7 +39,7 @@ namespace VCare2.RepositoryLayer
             return staff;
         }
 
-        public virtual async Task<staff> Create(staff newStaffMember)
+        public virtual async Task<staff?> Create(staff newStaffMember)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace VCare2.RepositoryLayer
         }
 
         // POST: StaffMembers/Edit/5
-        public async Task<staff> Update(staff staffMember)
+        public async Task<staff?> Update(staff staffMember)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace VCare2.RepositoryLayer
 
 
         // GET: StaffMembers/Delete/5
-        public async Task<staff> Delete(int? id)
+        public async Task<staff?> Delete(int? id)
         {
             if (id == null || _context.staff == null)
             {
@@ -140,7 +140,7 @@ namespace VCare2.RepositoryLayer
             return string.IsNullOrEmpty(name) || name.Any(x => forbiddenCharacters.Contains(x));
         }
 
-        internal staff UpdateCareHomeName(staff staff)
+        internal staff? UpdateCareHomeName(staff staff)
         {
             staff.CareHomeName = _context.Locations.Where(t => t.CareHomeId == staff.CareHomeId).Select(t => t.Name).Single();
             return staff;

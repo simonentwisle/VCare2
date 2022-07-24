@@ -20,15 +20,14 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: Locations/Details/5
-        public Location? Details(int? id)
+        public async Task<Location?>  Details(int? id)
         {
             if (id == null || _context.Locations == null)
             {
                 return null;
             }
 
-            var Location = _context.Locations
-                .SingleOrDefault(m => m.CareHomeId == id);
+            var Location = await _context.Locations.SingleOrDefaultAsync(m => m.CareHomeId == id);
             if (Location == null)
             {
                 return null;

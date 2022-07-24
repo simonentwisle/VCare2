@@ -86,14 +86,14 @@ namespace VCare2.RepositoryLayer
             return job;
         }
 
-        public Job? Delete(int? id)
+        public async Task<Job?> ? Delete(int? id)
         {
             if (id == null || _context.Jobs == null)
             {
                 return null;
             }
 
-            var job = _context.Jobs.SingleOrDefault(j => j.JobTitleId == id);
+            var job = await _context.Jobs.SingleOrDefaultAsync(j => j.JobTitleId == id);
 
             if (job == null)
             {
