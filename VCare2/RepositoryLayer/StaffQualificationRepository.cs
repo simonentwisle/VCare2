@@ -119,10 +119,10 @@ namespace VCare2.RepositoryLayer
                 return false; 
             }
 
-            var staffMember = await _context.staff.FindAsync(id);
-            if (staffMember != null)
+            var staffQualification = await _context.StaffQualifications.FindAsync(id);
+            if (staffQualification != null)
             {
-                _context.staff.Remove(staffMember);
+                _context.StaffQualifications.Remove(staffQualification);
             }
 
             await _context.SaveChangesAsync();

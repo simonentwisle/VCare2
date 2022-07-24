@@ -7,24 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VCare2.DatabaseLayer;
 using VCare2.DatabaseLayer.Models;
+using VCare2.ServiceLayer;
 
 namespace VCare2.Controllers
 {
     public class JobsController : Controller
     {
         private readonly CareHomeContext _context;
-
-        public JobsController(CareHomeContext context)
+        private readonly JobTitleService _service;
+        
+        public JobsController(CareHomeContext context, JobTitleService staffService)
         {
             _context = context;
+            _service = staffService;
         }
 
         // GET: Jobs
         public async Task<IActionResult> Index()
         {
-              return _context.Jobs != null ? 
-                          View(await _context.Jobs.ToListAsync()) :
-                          Problem("Entity set 'CareHomeContext.Jobs'  is null.");
+            return _context.Jobs != null ?
+                        View(await _service.Index()) :
+                        Problem("Entity set 'CareHomeContext.Jobs'  is null.");
         }
 
         // GET: Jobs/Details/5
@@ -63,8 +66,7 @@ namespace VCare2.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(job);
-                await _context.SaveChangesAsync();
+                _service.Create(job);
                 return RedirectToAction(nameof(Index));
             }
             return View(job);
@@ -156,11 +158,6 @@ namespace VCare2.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool JobExists(int id)
-        {
-          return (_context.Jobs?.Any(e => e.JobTitleId == id)).GetValueOrDefault();
         }
     }
 }
