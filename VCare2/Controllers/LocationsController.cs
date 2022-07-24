@@ -7,23 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VCare2.DatabaseLayer;
 using VCare2.DatabaseLayer.Models;
+using VCare2.ServiceLayer;
 
 namespace VCare2.Controllers
 {
     public class LocationsController : Controller
     {
         private readonly CareHomeContext _context;
+        private readonly LocationService _service;
 
-        public LocationsController(CareHomeContext context)
+        public LocationsController(CareHomeContext context, LocationService locationService)
         {
             _context = context;
+            _service = locationService;
         }
 
         // GET: Locations
         public async Task<IActionResult> Index()
         {
               return _context.Locations != null ? 
-                          View(await _context.Locations.ToListAsync()) :
+                          View(await _service.Index()) :
                           Problem("Entity set 'CareHomeContext.Locations'  is null.");
         }
 
@@ -35,8 +38,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var location = await _context.Locations
-                .FirstOrDefaultAsync(m => m.CareHomeId == id);
+            var location = _service.Details(id);
             if (location == null)
             {
                 return NotFound();
@@ -63,8 +65,7 @@ namespace VCare2.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(location);
-                await _context.SaveChangesAsync();
+                _service.Create(location);
                 return RedirectToAction(nameof(Index));
             }
             return View(location);
@@ -78,7 +79,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var location = await _context.Locations.FindAsync(id);
+            var location = _service.Edit(id);
             if (location == null)
             {
                 return NotFound();
@@ -105,8 +106,7 @@ namespace VCare2.Controllers
             {
                 try
                 {
-                    _context.Update(location);
-                    await _context.SaveChangesAsync();
+                    _service.Update(location,id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,8 +132,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var location = await _context.Locations
-                .FirstOrDefaultAsync(m => m.CareHomeId == id);
+            var location = _service.Details(id);
             if (location == null)
             {
                 return NotFound();
@@ -151,13 +150,9 @@ namespace VCare2.Controllers
             {
                 return Problem("Entity set 'CareHomeContext.Locations'  is null.");
             }
-            var location = await _context.Locations.FindAsync(id);
-            if (location != null)
-            {
-                _context.Locations.Remove(location);
-            }
+
+            _service.DeleteConfirmed(id);
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

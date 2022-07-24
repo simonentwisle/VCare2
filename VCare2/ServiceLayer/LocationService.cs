@@ -63,7 +63,7 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<Location> Edit(Location Location, int id)
+        public async Task<Location> Update(Location Location, int id)
         {
             return await _locationRepository.Edit(id, Location);
         }
