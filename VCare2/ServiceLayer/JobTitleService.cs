@@ -63,9 +63,9 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<Job> Edit(Job job, int id)
+        public async Task<Job> Update(Job job, int id)
         {
-            return await _jobTitleRepository.Edit(id,job);
+            return await _jobTitleRepository.Update(id,job);
         }
 
         //get

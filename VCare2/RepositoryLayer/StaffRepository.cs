@@ -75,7 +75,7 @@ namespace VCare2.RepositoryLayer
         }
 
         // POST: StaffMembers/Edit/5
-        public async Task<staff> Edit(staff staffMember)
+        public async Task<staff> Update(staff staffMember)
         {
             try
             {

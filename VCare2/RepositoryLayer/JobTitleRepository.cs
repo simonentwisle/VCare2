@@ -61,7 +61,7 @@ namespace VCare2.RepositoryLayer
             return job;
         }
 
-        public async Task<Job> Edit(int id, Job job)
+        public async Task<Job> Update(int id, Job job)
         {
             if (id != job.JobTitleId)
             {
@@ -101,7 +101,6 @@ namespace VCare2.RepositoryLayer
                 return null;
             }
 
-            
             return job;
         }
 

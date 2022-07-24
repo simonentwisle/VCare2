@@ -38,8 +38,9 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var job = await _context.Jobs
-                .FirstOrDefaultAsync(m => m.JobTitleId == id);
+            var job =  _service.Details(id);
+            //var job = await _context.Jobs
+            //    .FirstOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
             {
                 return NotFound();
@@ -80,7 +81,8 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var job = await _context.Jobs.FindAsync(id);
+            var job = _service.Edit(id);
+            //var job = await _context.Jobs.FindAsync(id);
             if (job == null)
             {
                 return NotFound();
@@ -104,8 +106,9 @@ namespace VCare2.Controllers
             {
                 try
                 {
-                    _context.Update(job);
-                    await _context.SaveChangesAsync();
+                    //_service.Update(job);
+                    //_context.Update(job);
+                    await _service.Update(job,id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -131,8 +134,9 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var job = await _context.Jobs
-                .FirstOrDefaultAsync(m => m.JobTitleId == id);
+            var job = _service.Delete(id);
+            //var job = await _context.Jobs
+            //    .FirstOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
             {
                 return NotFound();
@@ -150,14 +154,14 @@ namespace VCare2.Controllers
             {
                 return Problem("Entity set 'CareHomeContext.Jobs'  is null.");
             }
-            var job = await _context.Jobs.FindAsync(id);
-            if (job != null)
-            {
-                _context.Jobs.Remove(job);
-            }
-            
-            await _context.SaveChangesAsync();
+            var job = _service.DeleteConfirmed(id);
+
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool JobExists(int id)
+        {
+            return (_context.Jobs?.Any(e => e.JobTitleId == id)).GetValueOrDefault();
         }
     }
 }

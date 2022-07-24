@@ -63,9 +63,9 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<staff> Edit(staff staffMember)
+        public async Task<staff> Update(staff staffMember)
         {
-            return await _stafRepository.Edit(staffMember);
+            return await _stafRepository.Update(staffMember);
         }
 
         //get
