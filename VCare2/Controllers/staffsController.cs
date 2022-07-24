@@ -107,7 +107,7 @@ namespace VCare2.Controllers
             {
                 try
                 {
-                    await _service.Edit(staff);
+                    await _service.Update(staff);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -171,7 +171,7 @@ namespace VCare2.Controllers
             return staff;
         }
 
-        internal staff UpdateJobTitle(staff staff)
+        internal staff UpdateJobTitle(staff? staff)
         {
             staff.JobTitle = _context.Jobs.Where(t => t.JobTitleId == staff.JobTitleId).FirstOrDefault();
             staff.JobName = staff.JobTitle.JobTitle;

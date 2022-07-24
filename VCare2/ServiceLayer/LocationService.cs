@@ -69,9 +69,9 @@ namespace VCare2.ServiceLayer
         }
 
         //get
-        public Location Delete(int? id)
+        public async Task<Location> Delete(int? id)
         {
-            return _locationRepository.Delete(id);
+            return await _locationRepository.Delete(id);
         }
 
         //post

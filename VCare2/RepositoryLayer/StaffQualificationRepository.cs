@@ -20,7 +20,7 @@ namespace VCare2.RepositoryLayer
             return await careHomeContext.ToListAsync();
         }
 
-        public StaffQualification Details(int? id)
+        public StaffQualification? Details(int? id)
         {
             if (id == null || _context.StaffQualifications == null)
             {
@@ -59,14 +59,14 @@ namespace VCare2.RepositoryLayer
             return newStaffQualification;
         }
 
-        public StaffQualification Edit(int? id)
+        public async Task<StaffQualification?> Edit(int? id)
         {
             if (id == null || _context.staff == null)
             {
                 return null;
             }
 
-            StaffQualification staffQualification = _context.StaffQualifications.Find(id);
+            StaffQualification? staffQualification = await _context.StaffQualifications.FindAsync(id);
 
             if (staffQualification == null)
             {
@@ -93,7 +93,7 @@ namespace VCare2.RepositoryLayer
 
         }
 
-        public StaffQualification Delete(int? id)
+        public StaffQualification? Delete(int? id)
         {
             if (id == null || _context.StaffQualifications == null)
             {

@@ -12,7 +12,7 @@ namespace VCare2.ServiceLayer
             _jobTitleRepository = jobTitleRepository;
         }
 
-        public async Task<List<Job>> Index()
+        public async Task<List<Job>?> Index()
         {
             try
             {
@@ -24,11 +24,11 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public Job Details(int? id)
+        public async Task<Job?> Details(int? id)
         {
             try
             {
-                return _jobTitleRepository.Details(id);
+                return await _jobTitleRepository.Details(id);
             }
             catch (Exception exception)
             {
@@ -49,7 +49,7 @@ namespace VCare2.ServiceLayer
         }
 
         //Get
-        public async Task<Job> Edit(int? id)
+        public async Task<Job?> Edit(int? id)
         {
             try
             {
@@ -63,13 +63,13 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<Job> Update(Job job, int id)
+        public async Task<Job?> Update(Job job, int id)
         {
             return await _jobTitleRepository.Update(id,job);
         }
 
         //get
-        public Job Delete(int? id)
+        public async Task<Job> Delete(int? id)
         {
             return  _jobTitleRepository.Delete(id);
         }

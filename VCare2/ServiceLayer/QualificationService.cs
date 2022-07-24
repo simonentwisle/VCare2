@@ -24,11 +24,11 @@ namespace VCare2.ServiceLayer
             }
         }
 
-        public Qualification Details(int? id)
+        public async Task<Qualification> Details(int? id)
         {
             try
             {
-                return _QualificationRepository.Details(id);
+                return await _QualificationRepository.Details(id);
             }
             catch (Exception exception)
             {
@@ -63,7 +63,7 @@ namespace VCare2.ServiceLayer
         }
 
         //post
-        public async Task<Qualification> Edit(Qualification Qualification, int id)
+        public async Task<Qualification> Update(Qualification Qualification, int id)
         {
             return await _QualificationRepository.Edit(id, Qualification);
         }

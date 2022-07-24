@@ -65,7 +65,7 @@ namespace VCare2.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.Create(location);
+                await _service.Create(location);
                 return RedirectToAction(nameof(Index));
             }
             return View(location);
@@ -79,7 +79,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var location = _service.Edit(id);
+            var location = await _service.Edit(id);
             if (location == null)
             {
                 return NotFound();
@@ -106,7 +106,7 @@ namespace VCare2.Controllers
             {
                 try
                 {
-                    _service.Update(location,id);
+                    await _service.Update(location,id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,7 +132,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var location = _service.Details(id);
+            var location = await _service.Delete(id);
             if (location == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace VCare2.Controllers
                 return Problem("Entity set 'CareHomeContext.Locations'  is null.");
             }
 
-            _service.DeleteConfirmed(id);
+            await _service.DeleteConfirmed(id);
             
             return RedirectToAction(nameof(Index));
         }

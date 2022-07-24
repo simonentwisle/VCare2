@@ -49,11 +49,11 @@ namespace VCare2.ServiceLayer
         }
 
         //Get
-        public StaffQualification Edit(int? id)
+        public async Task<StaffQualification> Edit(int? id)
         {
             try
             {
-                return _staffQualificationRepository.Edit(id);
+                return await _staffQualificationRepository.Edit(id);
             }
 
             catch (Exception exception)

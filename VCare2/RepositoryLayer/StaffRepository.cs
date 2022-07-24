@@ -24,14 +24,14 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: staffs/Details/5
-        public  staff Details(int? id)
+        public  staff? Details(int? id)
         {
             if (id == null || _context.staff == null)
             {
                 return null;
             }
 
-            staff staff = _context.staff.FirstOrDefault(m => m.StaffId == id);
+            staff? staff = _context.staff.FirstOrDefault(m => m.StaffId == id);
 
             UpdateCareHomeName(staff);
             UpdateJobTitle(staff);
@@ -58,14 +58,14 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: StaffMembers/Edit/5
-        public async Task<staff> Edit(int? id)
+        public async Task<staff?> Edit(int? id)
         {
             if (id == null || _context.staff == null)
             {
                 return null;
             }
 
-            staff staffMember = await _context.staff.FindAsync(id);
+            staff? staffMember = await _context.staff.FindAsync(id);
             if (staffMember == null)
             {
                 return null;

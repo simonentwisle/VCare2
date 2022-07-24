@@ -20,7 +20,7 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: Locations/Details/5
-        public Location Details(int? id)
+        public Location? Details(int? id)
         {
             if (id == null || _context.Locations == null)
             {
@@ -46,7 +46,7 @@ namespace VCare2.RepositoryLayer
         }
 
 
-        public async Task<Location> Edit(int? id)
+        public async Task<Location?> Edit(int? id)
         {
             if (id == null || _context.Locations == null)
             {
@@ -61,7 +61,7 @@ namespace VCare2.RepositoryLayer
             return Location;
         }
 
-        public async Task<Location> Edit(int id, Location Location)
+        public async Task<Location?> Edit(int id, Location Location)
         {
             if (id != Location.CareHomeId)
             {
@@ -87,14 +87,14 @@ namespace VCare2.RepositoryLayer
             return Location;
         }
 
-        public Location Delete(int? id)
+        public async Task<Location?> Delete(int? id)
         {
             if (id == null || _context.Locations == null)
             {
                 return null;
             }
 
-            var Location = _context.Locations.SingleOrDefault(j => j.CareHomeId == id);
+            var Location = await _context.Locations.SingleOrDefaultAsync(j => j.CareHomeId == id);
 
             if (Location == null)
             {

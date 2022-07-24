@@ -72,7 +72,7 @@ namespace VCare2.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.Create(staffQualification);
+                await _service.Create(staffQualification);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -90,8 +90,8 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            StaffQualification staffQualification = GetStaffQualification(id);
-            staffQualification.FullName = GetFullName(staffQualification);
+            StaffQualification staffQualification = await GetStaffQualification(id);
+            staffQualification.FullName = GetFullName(staffQualification).ToString();
          
             if (staffQualification == null)
             {
@@ -104,14 +104,14 @@ namespace VCare2.Controllers
             return View(staffQualification);
         }
 
-        private StaffQualification GetStaffQualification(int? id)
+        private async Task<StaffQualification>  GetStaffQualification(int? id)
         {
-            return _service.Edit(id);
+            return await _service.Edit(id);
         }
 
-        private string? GetFullName(StaffQualification staffQualification)
+        private async Task<string?> GetFullName(StaffQualification staffQualification)
         {
-            return _context.staff.Where(stf => stf.StaffId == staffQualification.StaffId).Select(s => s.FullName).SingleOrDefault().ToString();
+            return await _context.staff.Where(stf => stf.StaffId == staffQualification.StaffId).Select(s => s.FullName).SingleOrDefaultAsync();
         }
 
 

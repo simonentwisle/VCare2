@@ -50,14 +50,6 @@ namespace VCare2.ServiceLayer
                 
             }
 
-            //staffQualificationsList.ToList().ForEach(item => new StaffQualification { Grade = item.Grade, QualificationType = item.QualificationType, AttainmentDate = item.AttainmentDate });  
-            
-            //foreach (var item in staffQualifications)
-            //{
-            //    staffQualificationsList.Add(new StaffQualification { Grade = item.Grade, QualificationType = item.QualificationType ,AttainmentDate = item.AttainmentDate});
-            //}
-
-     
             return (IEnumerable<StaffQualification>)staffQualificationsList;
         }
 

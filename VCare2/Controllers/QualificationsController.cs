@@ -7,23 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VCare2.DatabaseLayer;
 using VCare2.DatabaseLayer.Models;
+using VCare2.ServiceLayer;
 
 namespace VCare2.Controllers
 {
     public class QualificationsController : Controller
     {
         private readonly CareHomeContext _context;
+        private readonly QualificationService _service;
 
-        public QualificationsController(CareHomeContext context)
+        public QualificationsController(CareHomeContext context, QualificationService qualificationService)
         {
             _context = context;
+            _service = qualificationService;   
         }
 
         // GET: Qualifications
         public async Task<IActionResult> Index()
         {
               return _context.Qualifications != null ? 
-                          View(await _context.Qualifications.ToListAsync()) :
+                          View(await _service.Index()) :
                           Problem("Entity set 'CareHomeContext.Qualifications'  is null.");
         }
 
@@ -35,8 +38,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var qualification = await _context.Qualifications
-                .FirstOrDefaultAsync(m => m.QualificationsId == id);
+            var qualification = await _service.Details(id);
             if (qualification == null)
             {
                 return NotFound();
@@ -60,8 +62,7 @@ namespace VCare2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(qualification);
-                await _context.SaveChangesAsync();
+                await _service.Create(qualification);
                 return RedirectToAction(nameof(Index));
             }
             return View(qualification);
@@ -75,7 +76,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var qualification = await _context.Qualifications.FindAsync(id);
+            var qualification = await _service.Edit(id);
             if (qualification == null)
             {
                 return NotFound();
@@ -99,8 +100,7 @@ namespace VCare2.Controllers
             {
                 try
                 {
-                    _context.Update(qualification);
-                    await _context.SaveChangesAsync();
+                    await _service.Update(qualification, id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,8 +126,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var qualification = await _context.Qualifications
-                .FirstOrDefaultAsync(m => m.QualificationsId == id);
+            var qualification = _service.Delete(id);
             if (qualification == null)
             {
                 return NotFound();
@@ -145,13 +144,9 @@ namespace VCare2.Controllers
             {
                 return Problem("Entity set 'CareHomeContext.Qualifications'  is null.");
             }
-            var qualification = await _context.Qualifications.FindAsync(id);
-            if (qualification != null)
-            {
-                _context.Qualifications.Remove(qualification);
-            }
-            
-            await _context.SaveChangesAsync();
+
+            await _service.DeleteConfirmed(id);
+
             return RedirectToAction(nameof(Index));
         }
 

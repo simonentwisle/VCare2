@@ -20,15 +20,14 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: Jobs/Details/5
-        public Job Details(int? id)
+        public async Task<Job?> Details(int? id)
         {
             if (id == null || _context.Jobs == null)
             {
                 return null;
             }
 
-            var job = _context.Jobs
-                .SingleOrDefault(m => m.JobTitleId == id);
+            var job = await _context.Jobs.SingleOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
             {
                 return null;
@@ -46,7 +45,7 @@ namespace VCare2.RepositoryLayer
         }
 
 
-        public async Task<Job> Edit(int? id)
+        public async Task<Job?> Edit(int? id)
         {
             if (id == null || _context.Jobs == null)
             {
@@ -61,7 +60,7 @@ namespace VCare2.RepositoryLayer
             return job;
         }
 
-        public async Task<Job> Update(int id, Job job)
+        public async Task<Job?> Update(int id, Job job)
         {
             if (id != job.JobTitleId)
             {
@@ -87,7 +86,7 @@ namespace VCare2.RepositoryLayer
             return job;
         }
 
-        public Job Delete(int? id)
+        public Job? Delete(int? id)
         {
             if (id == null || _context.Jobs == null)
             {

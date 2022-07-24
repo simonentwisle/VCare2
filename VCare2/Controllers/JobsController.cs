@@ -38,7 +38,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var job =  _service.Details(id);
+            var job = await _service.Details(id);
             //var job = await _context.Jobs
             //    .FirstOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
@@ -67,7 +67,7 @@ namespace VCare2.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.Create(job);
+                await _service.Create(job);
                 return RedirectToAction(nameof(Index));
             }
             return View(job);
@@ -81,7 +81,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var job = _service.Edit(id);
+            var job = await _service.Edit(id);
             //var job = await _context.Jobs.FindAsync(id);
             if (job == null)
             {
@@ -134,7 +134,7 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var job = _service.Delete(id);
+            var job = await _service.Delete(id);
             //var job = await _context.Jobs
             //    .FirstOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
@@ -154,7 +154,7 @@ namespace VCare2.Controllers
             {
                 return Problem("Entity set 'CareHomeContext.Jobs'  is null.");
             }
-            var job = _service.DeleteConfirmed(id);
+            var job = await _service.DeleteConfirmed(id);
 
             return RedirectToAction(nameof(Index));
         }

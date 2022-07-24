@@ -20,15 +20,14 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: Qualifications/Details/5
-        public Qualification Details(int? id)
+        public async Task<Qualification?> Details(int? id)
         {
             if (id == null || _context.Qualifications == null)
             {
                 return null;
             }
 
-            var Qualification = _context.Qualifications
-                .SingleOrDefault(m => m.QualificationsId == id);
+            var Qualification = await _context.Qualifications.SingleOrDefaultAsync(m => m.QualificationsId == id);
             if (Qualification == null)
             {
                 return null;
@@ -46,7 +45,7 @@ namespace VCare2.RepositoryLayer
         }
 
 
-        public async Task<Qualification> Edit(int? id)
+        public async Task<Qualification?> Edit(int? id)
         {
             if (id == null || _context.Qualifications == null)
             {
@@ -61,7 +60,7 @@ namespace VCare2.RepositoryLayer
             return Qualification;
         }
 
-        public async Task<Qualification> Edit(int id, Qualification Qualification)
+        public async Task<Qualification?> Edit(int id, Qualification Qualification)
         {
             if (id != Qualification.QualificationsId)
             {
@@ -87,7 +86,7 @@ namespace VCare2.RepositoryLayer
             return Qualification;
         }
 
-        public Qualification Delete(int? id)
+        public Qualification? Delete(int? id)
         {
             if (id == null || _context.Qualifications == null)
             {
