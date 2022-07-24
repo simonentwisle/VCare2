@@ -39,8 +39,6 @@ namespace VCare2.Controllers
             }
 
             var job = await _service.Details(id);
-            //var job = await _context.Jobs
-            //    .FirstOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
             {
                 return NotFound();
@@ -82,7 +80,6 @@ namespace VCare2.Controllers
             }
 
             var job = await _service.Edit(id);
-            //var job = await _context.Jobs.FindAsync(id);
             if (job == null)
             {
                 return NotFound();
@@ -106,8 +103,6 @@ namespace VCare2.Controllers
             {
                 try
                 {
-                    //_service.Update(job);
-                    //_context.Update(job);
                     await _service.Update(job,id);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -135,8 +130,6 @@ namespace VCare2.Controllers
             }
 
             var job = await _service.Delete(id);
-            //var job = await _context.Jobs
-            //    .FirstOrDefaultAsync(m => m.JobTitleId == id);
             if (job == null)
             {
                 return NotFound();
