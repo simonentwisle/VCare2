@@ -7,23 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VCare2.DatabaseLayer;
 using VCare2.DatabaseLayer.Models;
+using VCare2.ServiceLayer;
 
 namespace VCare2.Controllers
 {
     public class StaffQualificationsController : Controller
     {
+        private readonly StaffQualificationService _service;
         private readonly CareHomeContext _context;
 
-        public StaffQualificationsController(CareHomeContext context)
+        public StaffQualificationsController(CareHomeContext context,StaffQualificationService staffQualificationService)
         {
             _context = context;
+            _service = staffQualificationService;
         }
 
         // GET: StaffQualifications
         public async Task<IActionResult> Index()
         {
-            var careHomeContext = _context.StaffQualifications.Include(s => s.QualificationType).Include(s => s.Staff);
-            return View(await careHomeContext.ToListAsync());
+            return View(await _service.Index());
         }
 
         // GET: StaffQualifications/Details/5
@@ -38,6 +40,7 @@ namespace VCare2.Controllers
                 .Include(s => s.QualificationType)
                 .Include(s => s.Staff)
                 .FirstOrDefaultAsync(m => m.StaffQualificationId == id);
+
             if (staffQualification == null)
             {
                 return NotFound();
@@ -69,11 +72,10 @@ namespace VCare2.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(staffQualification);
-                await _context.SaveChangesAsync();
+                _service.Create(staffQualification);
+
                 return RedirectToAction(nameof(Index));
             }
-
 
             PopulateQualificationDropDownList();
             PopulateStaffDropDownList();
@@ -88,11 +90,9 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staffQualification = await _context.StaffQualifications
-               .Include(s => s.QualificationType)
-               .Include(s => s.Staff)
-               .FirstOrDefaultAsync(m => m.StaffQualificationId == id);
-
+            StaffQualification staffQualification = GetStaffQualification(id);
+            staffQualification.FullName = GetFullName(staffQualification);
+         
             if (staffQualification == null)
             {
                 return NotFound();
@@ -104,7 +104,17 @@ namespace VCare2.Controllers
             return View(staffQualification);
         }
 
-        
+        private StaffQualification GetStaffQualification(int? id)
+        {
+            return _service.Edit(id);
+        }
+
+        private string? GetFullName(StaffQualification staffQualification)
+        {
+            return _context.staff.Where(stf => stf.StaffId == staffQualification.StaffId).Select(s => s.FullName).SingleOrDefault().ToString();
+        }
+
+
         // POST: StaffQualifications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -120,13 +130,11 @@ namespace VCare2.Controllers
             ModelState.Remove("Staff");
             ModelState.Clear();
 
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(staffQualification);
-                    await _context.SaveChangesAsync();
+                    await _service.Edit(staffQualification);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -154,10 +162,8 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            var staffQualification = await _context.StaffQualifications
-                .Include(s => s.QualificationType)
-                .Include(s => s.Staff)
-                .FirstOrDefaultAsync(m => m.StaffQualificationId == id);
+            StaffQualification staffQualification = _service.Delete(id);
+
             if (staffQualification == null)
             {
                 return NotFound();
@@ -175,12 +181,9 @@ namespace VCare2.Controllers
             {
                 return Problem("Entity set 'CareHomeContext.StaffQualifications'  is null.");
             }
-            var staffQualification = await _context.StaffQualifications.FindAsync(id);
-            if (staffQualification != null)
-            {
-                _context.StaffQualifications.Remove(staffQualification);
-            }
-            
+
+            bool success = await _service.DeleteConfirmed(id);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -210,17 +213,6 @@ namespace VCare2.Controllers
             
         }
 
-        //private async Task<staff> SetStaffMember(StaffQualification staffQualification)
-        //{
-        //    if (staffQualification == null)
-        //    {
-        //        return new staff();
-        //    }
-
-        //    var staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == staffQualification.StaffId);
-        //    ViewData["staffmember"] = staff;
-        //    return staff;
-        //}
 
     }
 }

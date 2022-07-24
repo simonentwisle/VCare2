@@ -1,5 +1,4 @@
 ﻿@model VCare2.DatabaseLayer.Models.staff
-@inject  VCare2.ServiceLayer.StateService StateService
 @inject  VCare2.ServiceLayer.StaffInjectionViewService StaffInjectionViewService
 @*@inject  VCare2.ServiceLayer.StatisticsService StatsService*@
 
@@ -8,21 +7,7 @@
 }
 
 <h1>Details</h1>
-@*
-<ul>
-            <li>Total Items: @StatsService.GetCount()</li>
-            <li>Completed: @StatsService.GetCompletedCount()</li>
-            <li>Avg. Priority: @StatsService.GetAveragePriority()</li>
-</ul>*@
 
-<div>
-   @foreach (var state in StateService.List())
-    {
-       @state.Name
-       @state.Abbreviation
-    }
-
-</div>
 <div>
     <h4>staff</h4>
     <hr />

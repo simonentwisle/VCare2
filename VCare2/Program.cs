@@ -13,8 +13,20 @@ builder.Services.AddDbContext<CareHomeContext>(options =>
 
 builder.Services.AddTransient(typeof(StaffService), typeof(StaffService));
 builder.Services.AddTransient(typeof(StaffRepository), typeof(StaffRepository));
-builder.Services.AddTransient(typeof(StatisticsService), typeof(StatisticsService));
-builder.Services.AddTransient(typeof(StateService), typeof(StateService));
+
+builder.Services.AddTransient(typeof(StaffQualificationService), typeof(StaffQualificationService));
+builder.Services.AddTransient(typeof(StaffQualificationRepository), typeof(StaffQualificationRepository));
+
+builder.Services.AddTransient(typeof(JobTitleService), typeof(JobTitleService));
+builder.Services.AddTransient(typeof(JobTitleRepository), typeof(JobTitleRepository));
+
+
+builder.Services.AddTransient(typeof(LocationService), typeof(LocationService));
+builder.Services.AddTransient(typeof(LocationRepository), typeof(LocationRepository));
+
+builder.Services.AddTransient(typeof(QualificationService), typeof(QualificationService));
+builder.Services.AddTransient(typeof(QualificationRepository), typeof(QualificationRepository));
+
 builder.Services.AddTransient(typeof(StaffInjectionViewService), typeof(StaffInjectionViewService));
 
 var app = builder.Build();

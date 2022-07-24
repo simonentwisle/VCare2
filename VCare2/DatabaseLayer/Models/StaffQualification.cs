@@ -42,5 +42,8 @@ namespace VCare2.DatabaseLayer.Models
 
         public virtual Qualification QualificationType { get; set; } = null!;
         public virtual staff Staff { get; set; } = null!;
+
+        [NotMapped]
+        public string? FullName { get; set; }
     }
 }
