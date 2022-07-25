@@ -83,17 +83,25 @@ namespace VCare2.Controllers
                 return NotFound();
             }
 
-            staff? staff = await _service.Edit(id);
+            staff? staff = await GetStaffDetails(id);
+            
 
             if (staff == null)
             {
                 return NotFound();
             }
 
+            PopulateQualificationDropDownList(1);
             PopulateJobsDropDownList(staff.JobTitleId);
             PopulateCareHomesDropDownList(staff.CareHomeId);
 
             return View(staff);
+        }
+
+        private async Task<staff?> GetStaffDetails(int? id)
+        {
+            ViewData["StaffID"] = id;
+            return await _service.Edit(id);
         }
 
         // POST: staffs/Edit/5
@@ -188,6 +196,12 @@ namespace VCare2.Controllers
         {
             var locations = _context.Locations;
             ViewBag.CareHomeId = new SelectList(locations, "CareHomeId", "Name", selectedItemId);
+        }
+
+        private void PopulateQualificationDropDownList(object? selectedItemId = null)
+        {
+            var qualifications = _context.Qualifications;
+            ViewData["QualificationsId"] = new SelectList(qualifications, "QualificationsId", "QualificationType", selectedItemId);
         }
     }
 }

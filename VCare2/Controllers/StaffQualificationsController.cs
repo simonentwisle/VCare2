@@ -74,7 +74,7 @@ namespace VCare2.Controllers
             {
                 await _service.Create(staffQualification);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "staffs", new { area = "" });
             }
 
             PopulateQualificationDropDownList();

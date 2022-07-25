@@ -29,6 +29,8 @@ builder.Services.AddTransient(typeof(QualificationRepository), typeof(Qualificat
 
 builder.Services.AddTransient(typeof(StaffInjectionViewService), typeof(StaffInjectionViewService));
 
+builder.Services.AddTransient(typeof(StatisticsService), typeof(StatisticsService));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

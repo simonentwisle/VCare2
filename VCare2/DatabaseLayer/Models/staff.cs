@@ -65,6 +65,24 @@ namespace VCare2.DatabaseLayer.Models
         [NotMapped]
         public string? JobName { get; set; } = string.Empty;
 
+        [Required]
+        [NotMapped]
+        public string? Qualification { get; set; } = string.Empty;
+
+        [Required]
+        [NotMapped]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "Grade can only contain letters")]
+        public string? Grade { get; set; } = string.Empty;
+
+        [Required]
+        [NotMapped]
+        public DateTime? AttainmentDate { get; set; }
+
+        [Required]
+        [NotMapped]
+        public int? QualificationTypeId { get; set; }
+       
+
         [Display(Name = "Full Name")]
         public string FullName
         {

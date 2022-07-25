@@ -1,6 +1,6 @@
 ﻿@model VCare2.DatabaseLayer.Models.staff
 @inject  VCare2.ServiceLayer.StaffInjectionViewService StaffInjectionViewService
-@*@inject  VCare2.ServiceLayer.StatisticsService StatsService*@
+@inject  VCare2.ServiceLayer.StatisticsService StatsService
 
 @{
     ViewData["Title"] = "Details";
@@ -74,6 +74,14 @@
             </table>
         </dd>
     </dl>
+</div>
+
+<div class="row">
+   <ul>
+            <li>Total Items: @StatsService.GetCount()</li>
+            <li>Completed: @StatsService.GetCompletedCount()</li>
+            <li>Avg. Priority: @StatsService.GetAveragePriority()</li>
+   </ul>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.StaffId">Edit</a> |
