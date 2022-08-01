@@ -75,14 +75,6 @@
         </dd>
     </dl>
 </div>
-
-<div class="row">
-   <ul>
-            <li>Total Items: @StatsService.GetCount()</li>
-            <li>Completed: @StatsService.GetCompletedCount()</li>
-            <li>Avg. Priority: @StatsService.GetAveragePriority()</li>
-   </ul>
-</div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.StaffId">Edit</a> |
     <a asp-action="Index">Back to List</a>

@@ -135,6 +135,7 @@ namespace VCare2.Controllers
                 try
                 {
                     await _service.Edit(staffQualification);
+                    return RedirectToAction("Details", "staffs", new { id = staffQualification.StaffId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -186,6 +187,7 @@ namespace VCare2.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+            //RedirectToAction("Error", "Home", new { name = "ErrorName", description = "ErrorDescription" });
         }
 
         private bool StaffQualificationExists(int id)
