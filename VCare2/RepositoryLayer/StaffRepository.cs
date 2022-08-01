@@ -16,7 +16,6 @@ namespace VCare2.RepositoryLayer
             _context = context;
         }
 
-        // GET: staffs
         public async Task<List<staff>> Index(string searchString)
         {
             IQueryable<staff> staffList;
@@ -31,7 +30,6 @@ namespace VCare2.RepositoryLayer
             return await staffList.ToListAsync();
         }
 
-        // GET: staffs/Details/5
         public async Task<staff?> Details(int? id)
         {
             if (id == null || _context.staff == null)
@@ -41,9 +39,12 @@ namespace VCare2.RepositoryLayer
 
             staff? staff = await _context.staff.FirstOrDefaultAsync(m => m.StaffId == id);
 
-            UpdateCareHomeName(staff);
-            UpdateJobTitle(staff);
-
+            if (staff != null)
+            {
+                UpdateCareHomeName(staff);
+                UpdateJobTitle(staff);
+            }
+         
             return staff;
         }
 
@@ -65,7 +66,6 @@ namespace VCare2.RepositoryLayer
             return newStaffMember;
         }
 
-        // GET: StaffMembers/Edit/5
         public async Task<staff?> Edit(int? id)
         {
             if (id == null || _context.staff == null)
@@ -82,7 +82,6 @@ namespace VCare2.RepositoryLayer
             return staffMember;
         }
 
-        // POST: StaffMembers/Edit/5
         public async Task<staff?> Update(staff staffMember)
         {
             try
@@ -100,13 +99,11 @@ namespace VCare2.RepositoryLayer
 
         }
 
-
-        // GET: StaffMembers/Delete/5
         public async Task<staff?> Delete(int? id)
         {
             if (id == null || _context.staff == null)
             {
-                return null; //NOt found
+                return null; 
             }
 
 
@@ -117,20 +114,19 @@ namespace VCare2.RepositoryLayer
 
             if (staffMember == null)
             {
-                return null;//NotFound();
+                return null;
             }
 
             return staffMember;
         }
 
-        // POST: StaffMembers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<bool> DeleteConfirmed(int id)
         {
             if (_context.staff == null)
             {
-                return false; // Problem("Entity set 'VoyageCareContext.StaffMembers'  is null.");
+                return false; 
             }
             var staffMember = await _context.staff.FindAsync(id);
             if (staffMember != null)
@@ -164,13 +160,11 @@ namespace VCare2.RepositoryLayer
         private void PopulateJobsDropDownList(object? selectedItemId = null)
         {
             var jobs = _context.Jobs;
-            //ViewBag.JobTitleId = new SelectList(jobs, "JobTitleId", "JobTitle", selectedItemId);
         }
 
         private void PopulateCareHomesDropDownList(object? selectedItemId = null)
         {
             var locations = _context.Locations;
-            //ViewBag.CareHomeId = new SelectList(locations, "CareHomeId", "Name", selectedItemId);
         }
     }
 }

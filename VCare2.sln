@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCare2", "VCare2\VCare2.csproj", "{F761133E-A0AA-4848-B54D-45058985B890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VCare2", "VCare2\VCare2.csproj", "{F761133E-A0AA-4848-B54D-45058985B890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCare2_Tests", "VCare2_Tests\VCare2_Tests.csproj", "{EC0CD63E-BD7F-4ADE-8556-B2BFAFDCC41A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F761133E-A0AA-4848-B54D-45058985B890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F761133E-A0AA-4848-B54D-45058985B890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F761133E-A0AA-4848-B54D-45058985B890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC0CD63E-BD7F-4ADE-8556-B2BFAFDCC41A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC0CD63E-BD7F-4ADE-8556-B2BFAFDCC41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC0CD63E-BD7F-4ADE-8556-B2BFAFDCC41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC0CD63E-BD7F-4ADE-8556-B2BFAFDCC41A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
