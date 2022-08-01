@@ -17,9 +17,17 @@ namespace VCare2.RepositoryLayer
         }
 
         // GET: staffs
-        public async Task<List<staff>> Index()
+        public async Task<List<staff>> Index(string searchString)
         {
-            var staffList = _context.staff.Include(s => s.CareHome).Include(s => s.JobTitle);
+            IQueryable<staff> staffList;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                staffList = _context.staff.Where(s => s.Forename.Contains(searchString)
+                                       || s.Surname.Contains(searchString)).Include(s => s.CareHome).Include(s => s.JobTitle);
+                return await staffList.ToListAsync();
+            }
+            staffList = _context.staff.Include(s => s.CareHome).Include(s => s.JobTitle);
             return await staffList.ToListAsync();
         }
 

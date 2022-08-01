@@ -25,9 +25,9 @@ namespace VCare2.Controllers
 
         // GET: staffs
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _service.Index());
+            return View(await _service.Index(searchString));
         }
 
         // GET: staffs/Details/5

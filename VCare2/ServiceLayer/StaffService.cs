@@ -12,11 +12,11 @@ namespace VCare2.ServiceLayer
             _stafRepository = staffRepository;
         }
 
-        public async Task<List<staff>?> Index()
+        public async Task<List<staff>?> Index(string searchString)
         {
             try
             {
-                return await _stafRepository.Index();
+                return await _stafRepository.Index(searchString);
             }
             catch (Exception exception)
             {
